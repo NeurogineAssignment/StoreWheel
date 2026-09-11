@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">StoreWheel</string>
+    <!-- Product page -->
+    <string name="search_product">Search product</string>
+    <string name="refresh">refresh</string>
+    <!-- mock -->
+    <string name="products_label">4 items remaining</string>
+    <string name="product_name">ProductName</string>
+    <string name="product_price">Price</string>
+
+    <!-- Product details -->
+    <string name="product_details">Product details</string>
+
+    <!-- Loading state Error Dialog -->
+    <string name="error_message">Server error</string>
+    <string name="error_message_exact">Server error is x</string>
+    <string name="confirmation">Ok</string>
+
+    <!-- Empty state -->
+    <string name="no_data_available">No data available</string>
+
+
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+</resources>

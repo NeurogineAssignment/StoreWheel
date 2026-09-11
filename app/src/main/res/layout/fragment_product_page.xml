@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ProductPage">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/baseline_menu_24"
+            app:menu="@menu/product_menu">
+
+            <com.google.android.material.search.SearchBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/search_product" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ViewStub
+        android:id="@+id/error_state"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/view_error_dialog"
+        android:layout="@layout/view_error_dialog"
+        android:visibility="gone"
+        />
+
+    <ViewStub
+        android:id="@+id/state_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/view_empty"
+        android:layout="@layout/view_empty"
+        android:visibility="gone"
+        />
+
+    <ViewStub
+        android:id="@+id/state_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inflatedId="@+id/view_progressbar"
+        android:layout="@layout/view_progress_bar"
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/products_label"
+            android:layout_marginStart="@dimen/label_margin_start"
+            android:layout_marginTop="@dimen/label_margin_top"
+            android:layout_marginBottom="@dimen/label_margin_bottom"
+            android:textAppearance="?attr/textAppearanceLabelSmall"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/list_padding_top"
+            android:paddingBottom="@dimen/list_padding_bottom"
+            tools:listitem="@layout/item_product_list"
+            />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
