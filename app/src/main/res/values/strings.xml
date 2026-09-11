@@ -10,6 +10,7 @@
 
     <!-- Product details -->
     <string name="product_details">Product details</string>
+    <string name="productImage">productImage</string>
 
     <!-- Loading state Error Dialog -->
     <string name="error_message">Server error</string>

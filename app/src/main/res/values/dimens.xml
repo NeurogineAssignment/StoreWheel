@@ -12,6 +12,17 @@
     <dimen name="list_padding_top">8dp</dimen>
     <dimen name="list_padding_bottom">8dp</dimen>
 
+    <!-- Product details page  -->
+    <dimen name="scroll_padding_bottom">16dp</dimen>
+    <dimen name="card_details_margin">16dp</dimen>
+    <dimen name="card_details_elevation">1dp</dimen>
+    <dimen name="linearLayout_details_padding">16dp</dimen>
+    <dimen name="imageView_margin">16dp</dimen>
+    <dimen name="ratingBar_margin_bottom">16dp</dimen>
+    <dimen name="title_margin_bottom">8dp</dimen>
+    <dimen name="price_margin_bottom">12dp</dimen>
+
+
     <!-- Error Dialog  -->
     <dimen name="confirmation_text_size">14sp</dimen>
     <dimen name="card_margin">24dp</dimen>
