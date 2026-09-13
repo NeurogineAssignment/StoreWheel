@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ProductPageFragment"
-        android:name="com.example.storewheel.features.products.ProductPage"
+        android:name="com.example.storewheel.features.products.ProductsPage"
         android:label="@string/product_page_label"
         tools:layout="@layout/fragment_product_page">
 
@@ -20,7 +20,10 @@
         android:name="com.example.storewheel.features.product.details.ProductDetails"
         android:label="@string/product_details_label"
         tools:layout="@layout/fragment_product_details">
-
+        <argument
+            android:name="productId"
+            app:argType="integer"
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_ProductDetailsFragment_to_ProductPageFragment"
             app:destination="@id/ProductPageFragment" />

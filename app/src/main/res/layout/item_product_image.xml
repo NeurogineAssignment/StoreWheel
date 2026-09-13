@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.carousel.MaskableFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/imageView_margin"
+        android:layout_gravity="center"
+        android:contentDescription="@string/productImage"
+        android:src="@drawable/ic_launcher_background"
+        />
+
+</com.google.android.material.carousel.MaskableFrameLayout>

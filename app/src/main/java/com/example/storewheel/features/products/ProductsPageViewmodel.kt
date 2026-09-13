@@ -2,9 +2,9 @@ package com.example.storewheel.features.products
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.storewheel.domain.usecases.GetFilteredProductsUsecase
-import com.example.storewheel.domain.usecases.GetProductsUsecase
-import com.example.storewheel.features.products.states.ProductPageState
+import com.example.storewheel.domain.usecases.GetFilteredProductsUseCase
+import com.example.storewheel.domain.usecases.GetProductsUseCase
+import com.example.storewheel.features.products.states.ProductsPageState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Job
@@ -20,32 +20,32 @@ import kotlin.time.Duration.Companion.milliseconds
 * Handles any presentation layer's business logic
 */
 @HiltViewModel
-class ProductPageViewmodel @Inject constructor(
-    val getProductsUsecase: GetProductsUsecase,
-    val getFilteredProductsUsecase: GetFilteredProductsUsecase
+class ProductsPageViewmodel @Inject constructor(
+    val getProductsUseCase: GetProductsUseCase,
+    val getFilteredProductsUseCase: GetFilteredProductsUseCase
 ) : ViewModel() {
 
-    private val _productsListState = MutableStateFlow<ProductPageState>(ProductPageState.Loading)
-    val productsListState = _productsListState as StateFlow<ProductPageState>
+    private val _productsListState = MutableStateFlow<ProductsPageState>(ProductsPageState.Loading)
+    val productsListState = _productsListState as StateFlow<ProductsPageState>
 
-    private val _filteredProductsListState = MutableStateFlow<ProductPageState>(ProductPageState.Loading)
-    val filteredProductsListState =  _filteredProductsListState as StateFlow<ProductPageState>
+    private val _filteredProductsListState = MutableStateFlow<ProductsPageState>(ProductsPageState.Loading)
+    val filteredProductsListState =  _filteredProductsListState as StateFlow<ProductsPageState>
 
     private var searchJob : Job? = null
 
     fun getProducts() {
         viewModelScope.launch {
-            val result = getProductsUsecase.invoke()
+            val result = getProductsUseCase.invoke()
             result.fold(
                 onSuccess = {
                     when {
-                       it.isEmpty() -> _productsListState.value = ProductPageState.Empty
-                        else -> _productsListState.value = ProductPageState.Success(it)
+                       it.isEmpty() -> _productsListState.value = ProductsPageState.Empty
+                        else -> _productsListState.value = ProductsPageState.Success(it)
                     }
                 },
                 onFailure = {
                     val exception = it.message ?: "unknown error"
-                        _productsListState.value = ProductPageState.Error("Server Error",exception)
+                        _productsListState.value = ProductsPageState.Error("Server Error",exception)
                 }
             )
         }
@@ -56,17 +56,17 @@ class ProductPageViewmodel @Inject constructor(
         searchJob =  viewModelScope.launch {
             // debounce effect
             delay(400L.milliseconds)
-            val result = getFilteredProductsUsecase.invoke(query)
+            val result = getFilteredProductsUseCase.invoke(query)
             result.fold(
                 onSuccess = {
                     when {
-                        it.isEmpty() -> _filteredProductsListState.value = ProductPageState.Empty
-                        else -> _filteredProductsListState.value = ProductPageState.Success(it)
+                        it.isEmpty() -> _filteredProductsListState.value = ProductsPageState.Empty
+                        else -> _filteredProductsListState.value = ProductsPageState.Success(it)
                     }
                 },
                 onFailure = {
                     val exception = it.message ?: "unknown error"
-                    _filteredProductsListState.value = ProductPageState.Error("Server Error",exception)
+                    _filteredProductsListState.value = ProductsPageState.Error("Server Error",exception)
                 }
             )
         }
