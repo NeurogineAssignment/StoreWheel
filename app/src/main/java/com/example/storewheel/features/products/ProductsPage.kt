@@ -1,21 +1,22 @@
 package com.example.storewheel.features.products
 
 import android.os.Bundle
-
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.storewheel.R
+import com.example.storewheel.commons.showErrorDialog
 import com.example.storewheel.databinding.FragmentProductPageBinding
-import com.example.storewheel.databinding.ViewErrorDialogBinding
+import com.example.storewheel.features.products.adapters.ProductsListAdapter
 import com.example.storewheel.features.products.helpers.ListContainerHelper
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,12 +24,14 @@ import kotlinx.coroutines.launch
  * Shows the list of products with basic info and allows the user to search through them.
  */
 @AndroidEntryPoint
-class ProductPage : Fragment() {
+class ProductsPage : Fragment() {
 
     private var _binding: FragmentProductPageBinding? = null
-    private val viewModel: ProductPageViewmodel by viewModels()
-
+    private val viewModel: ProductsPageViewmodel by viewModels()
     private val listContainerHelper = ListContainerHelper()
+    private val productsListAdapter = ProductsListAdapter(navigationCallback = ::navigateToProductDetails)
+    private val filteredProductsListAdapter = ProductsListAdapter(navigationCallback = ::navigateToProductDetails)
+
 
     // region lifecycle
 
@@ -88,7 +91,7 @@ class ProductPage : Fragment() {
     }
 
     private fun searchSetup() {
-        binding.searchView.editText.doOnTextChanged { text, _, _, count ->
+        binding.searchView.editText.doOnTextChanged { text, _, _, _ ->
             viewModel.searchProducts(text.toString())
         }
     }
@@ -97,33 +100,31 @@ class ProductPage : Fragment() {
     // region observables
 
     private suspend fun observeProducts() {
-        viewModel.productsListState.collect {
-            listContainerHelper.stateHandler(requireContext(),binding.productsListContainer,it) {
-                showDialog()
+        viewModel.productsListState.collect { productsPageState ->
+            listContainerHelper.stateHandler(requireContext(),binding.productsListContainer,productsPageState,productsListAdapter) {
+                showErrorDialog()
             }
         }
     }
 
 
     private suspend fun observeFilteredProducts() {
-        viewModel.filteredProductsListState.collect {
-            listContainerHelper.stateHandler(requireContext(),binding.filteredProductsListContainer,it) {
-                showDialog()
+        viewModel.filteredProductsListState.collect { productsPageState ->
+            listContainerHelper.stateHandler(requireContext(),binding.filteredProductsListContainer,productsPageState,filteredProductsListAdapter) {
+                showErrorDialog()
             }
         }
     }
 
     //endregion
 
-    // region utilities
+    // region navigation
 
-    private fun showDialog() {
-        val dialogBinding = ViewErrorDialogBinding.inflate(layoutInflater)
-        val dialog = MaterialAlertDialogBuilder(requireContext()).setView(dialogBinding.root).create()
-        dialogBinding.confirmation.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
+    private fun navigateToProductDetails(productId:Int) {
+        val bundle = bundleOf("productId" to productId)
+        findNavController().navigate(
+            R.id.action_ProductPageFragment_to_ProductDetailsFragment,
+            bundle)
     }
 
     //endregion
