@@ -8,7 +8,7 @@ import com.example.storewheel.R
 import com.example.storewheel.databinding.ItemProductListBinding
 import com.example.storewheel.domain.ProductModel
 
-class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
+class ProductsListAdapter(private val navigationCallback : (Int) -> Unit) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
     private var products: List<ProductModel> = emptyList()
     fun setProducts(products: List<ProductModel>){
         this.products = products
@@ -32,6 +32,7 @@ class ProductsListAdapter : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>
             .placeholder(R.drawable.ic_launcher_foreground)
             .error(R.drawable.baseline_error_outline_24)
             .into(holder.view.image)
+        holder.itemView.setOnClickListener { navigationCallback(products[position].id) }
     }
 
     override fun getItemCount(): Int {

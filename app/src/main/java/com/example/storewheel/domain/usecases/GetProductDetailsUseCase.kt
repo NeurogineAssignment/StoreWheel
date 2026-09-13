@@ -1,10 +1,9 @@
 package com.example.storewheel.domain.usecases
 
 import com.example.storewheel.domain.ProductDetailsModel
-import com.example.storewheel.domain.ProductModel
 import javax.inject.Inject
 
-class GetProductDetailsUsecase @Inject constructor() {
+class GetProductDetailsUseCase @Inject constructor() {
     operator fun invoke (id:Int) : Result<ProductDetailsModel>{
         // Mock data for domain testing purpose
         val product = ProductDetailsModel(

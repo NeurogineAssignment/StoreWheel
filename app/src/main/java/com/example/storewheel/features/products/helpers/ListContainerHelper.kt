@@ -6,20 +6,21 @@ import androidx.core.view.isVisible
 import com.example.storewheel.R
 import com.example.storewheel.databinding.ViewProductsListBinding
 import com.example.storewheel.features.products.adapters.ProductsListAdapter
-import com.example.storewheel.features.products.states.ProductPageState
+import com.example.storewheel.features.products.states.ProductsPageState
 
 class ListContainerHelper {
 
     fun stateHandler (
         context: Context,
         binding: ViewProductsListBinding,
-        productPageState: ProductPageState,
+        productsPageState: ProductsPageState,
+        productsListAdapter: ProductsListAdapter,
         errorCallback: () -> Unit
         ) {
-        when(productPageState) {
-            is ProductPageState.Success -> updateProductListContainer(context,binding,productPageState)
-            is ProductPageState.Empty -> renderEmptyState(binding)
-            is ProductPageState.Loading -> renderLoadingState(binding)
+        when(productsPageState) {
+            is ProductsPageState.Success -> updateProductListContainer(context,binding,productsListAdapter,productsPageState)
+            is ProductsPageState.Empty -> renderEmptyState(binding)
+            is ProductsPageState.Loading -> renderLoadingState(binding)
             else -> {errorCallback()}
         }
     }
@@ -27,20 +28,21 @@ class ListContainerHelper {
     private fun updateProductListContainer(
         context: Context,
         binding: ViewProductsListBinding,
-        productPageState: ProductPageState.Success
+        productsListAdapter: ProductsListAdapter,
+        productsPageState: ProductsPageState.Success
     ) {
-        fillProductListContainer(context,binding,productPageState)
+        fillProductListContainer(context,binding,productsPageState,productsListAdapter)
         renderProductList(binding)
     }
 
     private fun fillProductListContainer(
         context: Context,
         binding: ViewProductsListBinding,
-        productPageState: ProductPageState.Success
+        productsPageState: ProductsPageState.Success,
+        productsListAdapter: ProductsListAdapter
     ) {
-        val productsListAdapter = ProductsListAdapter()
-        val productsList = productPageState.products
-        productsListAdapter.setProducts(productPageState.products)
+        val productsList = productsPageState.products
+        productsListAdapter.setProducts(productsList)
         binding.productsList.adapter = productsListAdapter
         // update label
         binding.productsListLabel.text = context.getString(R.string.items_available,productsList.size)

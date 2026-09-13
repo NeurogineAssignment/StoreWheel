@@ -3,7 +3,7 @@ package com.example.storewheel.domain.usecases
 import com.example.storewheel.domain.ProductModel
 import javax.inject.Inject
 
-class GetFilteredProductsUsecase @Inject constructor() {
+class GetFilteredProductsUseCase @Inject constructor() {
     operator fun invoke (query: String) : Result<List<ProductModel>>{
         // Mock data for domain testing purpose
         val dummyProductList = listOf(
