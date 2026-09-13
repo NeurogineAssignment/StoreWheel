@@ -5,7 +5,7 @@ import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.example.storewheel.R
 import com.example.storewheel.databinding.ViewProductsListBinding
-import com.example.storewheel.features.products.adapters.ProductListAdapter
+import com.example.storewheel.features.products.adapters.ProductsListAdapter
 import com.example.storewheel.features.products.states.ProductPageState
 
 class ListContainerHelper {
@@ -38,10 +38,10 @@ class ListContainerHelper {
         binding: ViewProductsListBinding,
         productPageState: ProductPageState.Success
     ) {
-        val productListAdapter = ProductListAdapter()
+        val productsListAdapter = ProductsListAdapter()
         val productsList = productPageState.products
-        productListAdapter.setProducts(productPageState.products)
-        binding.productsList.adapter = productListAdapter
+        productsListAdapter.setProducts(productPageState.products)
+        binding.productsList.adapter = productsListAdapter
         // update label
         binding.productsListLabel.text = context.getString(R.string.items_available,productsList.size)
     }
