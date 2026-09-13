@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+    android:orientation="vertical">
+
+
+    <include
+        android:id="@+id/state_empty"
+        layout="@layout/view_empty"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/state_loading"
+        layout="@layout/view_progress_bar"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/recyclerViewContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:id="@+id/productsListLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/products_label"
+        android:layout_marginStart="@dimen/label_margin_start"
+        android:layout_marginTop="@dimen/label_margin_top"
+        android:layout_marginBottom="@dimen/label_margin_bottom"
+        android:textAppearance="?attr/textAppearanceLabelSmall"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/productsList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/list_padding_top"
+        android:paddingBottom="@dimen/list_padding_bottom"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_product_list" />
+    </LinearLayout>
+</LinearLayout>
+

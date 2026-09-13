@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:background="?attr/colorSurface"
-    tools:context=".ProductDetails">
+    tools:context=".features.product.details.ProductDetails">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
