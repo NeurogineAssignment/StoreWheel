@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/ProductPageFragment"
-        android:name="com.example.storewheel.ProductPage"
+        android:name="com.example.storewheel.features.products.ProductPage"
         android:label="@string/product_page_label"
         tools:layout="@layout/fragment_product_page">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/ProductDetailsFragment"
-        android:name="com.example.storewheel.ProductDetails"
+        android:name="com.example.storewheel.features.product.details.ProductDetails"
         android:label="@string/product_details_label"
         tools:layout="@layout/fragment_product_details">
 

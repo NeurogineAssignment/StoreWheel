@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProductPage">
+    tools:context=".features.products.ProductPage">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        app:materialThemeOverlay="@style/ThemeOverlay.Material3Expressive.AppBarWithSearch"
+        app:statusBarForeground="?attr/colorSurface"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -19,65 +21,37 @@
             app:menu="@menu/product_menu">
 
             <com.google.android.material.search.SearchBar
+                android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/search_product" />
+                android:hint="@string/search_product">
+
+            </com.google.android.material.search.SearchBar>
 
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ViewStub
+    <include
         android:id="@+id/error_state"
+        layout="@layout/view_error_dialog"
+        android:visibility="gone" />
+
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:inflatedId="@+id/view_error_dialog"
-        android:layout="@layout/view_error_dialog"
-        android:visibility="gone"
-        />
+        app:layout_anchor="@id/searchBar">
 
-    <ViewStub
-        android:id="@+id/state_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:inflatedId="@+id/view_empty"
-        android:layout="@layout/view_empty"
-        android:visibility="gone"
-        />
+        <include
+            android:id="@+id/filteredProductsListContainer"
+            layout="@layout/view_products_list" />
+    </com.google.android.material.search.SearchView>
 
-    <ViewStub
-        android:id="@+id/state_loading"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:inflatedId="@+id/view_progressbar"
-        android:layout="@layout/view_progress_bar"
-        android:visibility="gone"
-        />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/products_label"
-            android:layout_marginStart="@dimen/label_margin_start"
-            android:layout_marginTop="@dimen/label_margin_top"
-            android:layout_marginBottom="@dimen/label_margin_bottom"
-            android:textAppearance="?attr/textAppearanceLabelSmall"
-            android:textColor="?attr/colorOnSurfaceVariant" />
+    <include
+        android:id="@+id/productsListContainer"
+        layout="@layout/view_products_list" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/list_padding_top"
-            android:paddingBottom="@dimen/list_padding_bottom"
-            tools:listitem="@layout/item_product_list"
-            />
-    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

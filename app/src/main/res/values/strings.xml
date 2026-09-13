@@ -4,9 +4,11 @@
     <string name="search_product">Search product</string>
     <string name="refresh">refresh</string>
     <!-- mock -->
-    <string name="products_label">4 items remaining</string>
+    <string name="products_label">0 items loaded</string>
     <string name="product_name">ProductName</string>
     <string name="product_price">Price</string>
+    <!-- Programmatic values -->
+    <string name="items_available">%1$d items available</string>
 
     <!-- Product details -->
     <string name="product_details">Product details</string>
