@@ -19,6 +19,8 @@ ksp = "2.3.10"
 hiltPlugin = "2.60.1"
 glide = "5.0.9"
 coroutines = "1.3.9"
+retrofit = "3.0.0"
+converterGson = "3.0.0"
 
 
 [libraries]
@@ -39,6 +41,8 @@ hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", v
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltAndroid" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
