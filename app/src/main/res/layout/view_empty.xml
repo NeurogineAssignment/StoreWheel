@@ -5,7 +5,6 @@
     android:gravity="center"
     android:text="@string/no_data_available"
     android:textAppearance="?attr/textAppearanceBodyLarge"
-    android:textColor="?attr/colorOnSurfaceVariant"
-    >
+    android:textColor="?attr/colorOnSurfaceVariant">
 
 </TextView>

@@ -29,17 +29,18 @@ class ProductsPageViewmodel @Inject constructor(
     private val _productsListState = MutableStateFlow<ProductsPageState>(ProductsPageState.Loading)
     val productsListState = _productsListState as StateFlow<ProductsPageState>
 
-    private val _filteredProductsListState = MutableStateFlow<ProductsPageState>(ProductsPageState.Loading)
-    val filteredProductsListState =  _filteredProductsListState as StateFlow<ProductsPageState>
+    private val _filteredProductsListState =
+        MutableStateFlow<ProductsPageState>(ProductsPageState.Loading)
+    val filteredProductsListState = _filteredProductsListState as StateFlow<ProductsPageState>
 
-    private var searchJob : Job? = null
-    private var currentSKip :Int = 0
+    private var searchJob: Job? = null
+    private var currentSKip: Int = 0
 
     fun getProducts(isRefresh: Boolean = false) {
         // if refresh then reset skip
-        if(isRefresh) currentSKip = 0
+        if (isRefresh) currentSKip = 0
         // start indeterminant loading state
-        if(currentSKip>0) _productsListState.value = ProductsPageState.PaginationLoad
+        if (currentSKip > 0) _productsListState.value = ProductsPageState.PaginationLoad
         // fetch from useCase
         viewModelScope.launch {
             val result = getProductsUseCase.invoke(currentSKip)
@@ -47,40 +48,42 @@ class ProductsPageViewmodel @Inject constructor(
                 onSuccess = {
                     _productsListState.value = when {
                         it.isEmpty() && currentSKip == 0 -> ProductsPageState.Empty
-                        isRefresh -> ProductsPageState.Success(it,isRefresh = true)
+                        isRefresh -> ProductsPageState.Success(it, isRefresh = true)
                         else -> ProductsPageState.Success(it)
                     }
                 },
                 onFailure = {
                     val exception = it.message ?: "unknown error"
-                        _productsListState.value = ProductsPageState.Error("Server Error",exception)
+                    _productsListState.value = ProductsPageState.Error("Server Error", exception)
                 }
             )
         }
     }
 
-    fun incrementSkip(){
+    fun incrementSkip() {
         currentSKip += 20
     }
 
-    fun searchProducts(query: String){
+    fun searchProducts(query: String) {
         searchJob?.cancel()
-        searchJob =  viewModelScope.launch {
+        searchJob = viewModelScope.launch {
             // debounce effect
             delay(400L.milliseconds)
             val result = getFilteredProductsUseCase.invoke(query)
             // to prevent coroutine cancellation exception
-            if(!isActive) return@launch
+            if (!isActive) return@launch
             result.fold(
                 onSuccess = {
                     when {
                         it.isEmpty() -> _filteredProductsListState.value = ProductsPageState.Empty
-                        else -> _filteredProductsListState.value = ProductsPageState.Success(it,true)
+                        else -> _filteredProductsListState.value =
+                            ProductsPageState.Success(it, true)
                     }
                 },
                 onFailure = {
                     val exception = it.message ?: "unknown error"
-                    _filteredProductsListState.value = ProductsPageState.Error("Server Error",exception)
+                    _filteredProductsListState.value =
+                        ProductsPageState.Error("Server Error", exception)
                 }
             )
         }

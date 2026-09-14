@@ -15,10 +15,11 @@ class ProductDetailsViewmodel @Inject constructor(
     val getProductDetailsUseCase: GetProductDetailsUseCase,
 ) : ViewModel() {
 
-    private val _productDetailsState = MutableStateFlow<ProductDetailsState>(ProductDetailsState.Loading)
+    private val _productDetailsState =
+        MutableStateFlow<ProductDetailsState>(ProductDetailsState.Loading)
     val productDetailsState = _productDetailsState as StateFlow<ProductDetailsState>
 
-    fun getProductDetails(id:Int) {
+    fun getProductDetails(id: Int) {
         viewModelScope.launch {
             val result = getProductDetailsUseCase.invoke(id)
             result.fold(
@@ -31,7 +32,8 @@ class ProductDetailsViewmodel @Inject constructor(
                 },
                 onFailure = {
                     val exception = it.message ?: "unknown error"
-                    _productDetailsState.value = ProductDetailsState.Error("Server Error",exception)
+                    _productDetailsState.value =
+                        ProductDetailsState.Error("Server Error", exception)
                 }
             )
         }

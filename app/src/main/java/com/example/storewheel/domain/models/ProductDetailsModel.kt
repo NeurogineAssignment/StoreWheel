@@ -1,6 +1,6 @@
 package com.example.storewheel.domain.models
 
-class ProductDetailsModel (
+class ProductDetailsModel(
     val id: Int,
     val title: String,
     val imageUrl: List<String>,
