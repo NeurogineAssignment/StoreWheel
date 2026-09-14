@@ -1,6 +1,6 @@
 package com.example.storewheel.features.product.details.states
 
-import com.example.storewheel.domain.ProductDetailsModel
+import com.example.storewheel.domain.models.ProductDetailsModel
 
 sealed interface ProductDetailsState {
     data object Loading : ProductDetailsState

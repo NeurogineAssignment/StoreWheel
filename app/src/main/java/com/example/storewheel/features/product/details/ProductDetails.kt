@@ -12,11 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.storewheel.commons.showErrorDialog
 import com.example.storewheel.databinding.FragmentProductDetailsBinding
-import com.example.storewheel.databinding.ViewErrorDialogBinding
 import com.example.storewheel.features.product.details.adapters.ProductImagesCarouselAdapter
 import com.example.storewheel.features.product.details.helpers.DetailsCardHelper
 import com.google.android.material.carousel.CarouselSnapHelper
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlin.getValue
@@ -80,7 +78,7 @@ class ProductDetails : Fragment() {
     private suspend fun observeProductDetails() {
        viewModel.productDetailsState.collect { productDetails ->
            detailsCardHelper.stateHandler(binding,productDetails,productImagesCarouselAdapter) {
-               showErrorDialog().setOnDismissListener {
+               showErrorDialog(it.message,it.specificMessage).setOnDismissListener {
                    findNavController().navigateUp()
                }
            }

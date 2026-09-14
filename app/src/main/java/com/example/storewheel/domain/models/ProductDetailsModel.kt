@@ -1,4 +1,4 @@
-package com.example.storewheel.domain
+package com.example.storewheel.domain.models
 
 class ProductDetailsModel (
     val id: Int,

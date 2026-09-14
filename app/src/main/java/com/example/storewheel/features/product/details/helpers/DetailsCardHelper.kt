@@ -12,12 +12,12 @@ class DetailsCardHelper {
         binding: FragmentProductDetailsBinding,
         productDetailsState: ProductDetailsState,
         productImagesCarouselAdapter: ProductImagesCarouselAdapter,
-        errorCallback: () -> Unit
+        errorCallback: (ProductDetailsState.Error) -> Unit
         ) {
         when(productDetailsState) {
             is ProductDetailsState.Success -> updateProductDetails(binding,productDetailsState,productImagesCarouselAdapter)
             is ProductDetailsState.Loading -> renderLoadingState(binding)
-            else -> {errorCallback()}
+            is ProductDetailsState.Error -> errorCallback(productDetailsState)
         }
     }
 
