@@ -29,16 +29,4 @@ class NetworkModule {
     fun provideProductsApi(retrofit: Retrofit): ProductsApi {
         return retrofit.create(ProductsApi::class.java)
     }
-
-    @Provides
-    @Singleton
-    fun provideProductsRepository(productsApi: ProductsApi): ProductsRepository {
-        return ProductsRepository(productsApi)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetProductsUseCase(productsRepository: ProductsRepository): GetProductsUseCase {
-        return GetProductsUseCase(productsRepository)
-    }
 }
