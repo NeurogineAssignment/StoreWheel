@@ -34,7 +34,6 @@ class ProductsPageViewmodel @Inject constructor(
     private var searchJob : Job? = null
     private var currentSKip :Int = 0
 
-    fun getProducts() {
     fun getProducts(isRefresh: Boolean = false) {
         // if refresh then reset skip
         if(isRefresh) currentSKip = 0
@@ -42,12 +41,13 @@ class ProductsPageViewmodel @Inject constructor(
         if(currentSKip>0) _productsListState.value = ProductsPageState.PaginationLoad
         // fetch from useCase
         viewModelScope.launch {
-            val result = getProductsUseCase.invoke()
+            val result = getProductsUseCase.invoke(currentSKip)
             result.fold(
                 onSuccess = {
-                    when {
-                       it.isEmpty() -> _productsListState.value = ProductsPageState.Empty
-                        else -> _productsListState.value = ProductsPageState.Success(it)
+                    _productsListState.value = when {
+                        it.isEmpty() && currentSKip == 0 -> ProductsPageState.Empty
+                        isRefresh -> ProductsPageState.Success(it,isRefresh = true)
+                        else -> ProductsPageState.Success(it)
                     }
                 },
                 onFailure = {
