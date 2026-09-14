@@ -52,6 +52,7 @@ class ListContainerHelper {
         binding.recyclerViewContainer.isVisible = true
         binding.stateLoading.root.isGone = true
         binding.stateEmpty.root.isGone = true
+        binding.progressIndicator.isGone = true
     }
 
     fun renderLoadingState (binding: ViewProductsListBinding) {
@@ -64,6 +65,11 @@ class ListContainerHelper {
         binding.stateEmpty.root.isVisible = true
         binding.stateLoading.root.isGone = true
         binding.recyclerViewContainer.isGone = true
+        binding.progressIndicator.isGone = true
+    }
+
+    private fun renderIndeterminateLoad(binding: ViewProductsListBinding) {
+        binding.progressIndicator.isVisible = true
     }
 
 }
