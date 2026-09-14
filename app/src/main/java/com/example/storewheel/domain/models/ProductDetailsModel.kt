@@ -7,4 +7,7 @@ class ProductDetailsModel (
     val price: Double,
     val rating: Float,
     val description: String,
-)
+) {
+    val isEmpty get() = id == 0
+}
+

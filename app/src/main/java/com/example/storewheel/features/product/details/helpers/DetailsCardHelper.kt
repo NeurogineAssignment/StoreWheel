@@ -8,15 +8,21 @@ import com.example.storewheel.features.product.details.states.ProductDetailsStat
 
 class DetailsCardHelper {
 
-    fun stateHandler (
+    fun stateHandler(
         binding: FragmentProductDetailsBinding,
         productDetailsState: ProductDetailsState,
         productImagesCarouselAdapter: ProductImagesCarouselAdapter,
         errorCallback: (ProductDetailsState.Error) -> Unit
-        ) {
-        when(productDetailsState) {
-            is ProductDetailsState.Success -> updateProductDetails(binding,productDetailsState,productImagesCarouselAdapter)
+    ) {
+        when (productDetailsState) {
+            is ProductDetailsState.Success -> updateProductDetails(
+                binding,
+                productDetailsState,
+                productImagesCarouselAdapter
+            )
+
             is ProductDetailsState.Loading -> renderLoadingState(binding)
+            is ProductDetailsState.Empty -> renderEmptyState(binding)
             is ProductDetailsState.Error -> errorCallback(productDetailsState)
         }
     }
@@ -26,7 +32,7 @@ class DetailsCardHelper {
         productDetailsState: ProductDetailsState.Success,
         productImagesCarouselAdapter: ProductImagesCarouselAdapter
     ) {
-        fillProductListContainer(binding,productDetailsState,productImagesCarouselAdapter)
+        fillProductListContainer(binding, productDetailsState, productImagesCarouselAdapter)
         renderProductList(binding)
     }
 
@@ -46,14 +52,21 @@ class DetailsCardHelper {
         binding.rating.rating = product.rating
     }
 
-    fun renderProductList (binding: FragmentProductDetailsBinding) {
-        binding.imagesCarousel.isVisible = true
+    fun renderProductList(binding: FragmentProductDetailsBinding) {
+        binding.detailsCard.isVisible = true
         binding.stateLoading.root.isGone = true
+        binding.stateEmpty.root.isGone = true
     }
 
-    fun renderLoadingState (binding: FragmentProductDetailsBinding) {
+    fun renderLoadingState(binding: FragmentProductDetailsBinding) {
         binding.stateLoading.root.isVisible = true
-        binding.imagesCarousel.isGone = true
+        binding.detailsCard.isGone = true
+        binding.stateEmpty.root.isGone = true
     }
 
+    fun renderEmptyState(binding: FragmentProductDetailsBinding) {
+        binding.stateEmpty.root.isVisible = true
+        binding.stateLoading.root.isGone = true
+        binding.detailsCard.isGone = true
+    }
 }
