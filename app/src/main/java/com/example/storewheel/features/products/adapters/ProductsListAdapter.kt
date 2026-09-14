@@ -10,10 +10,24 @@ import com.example.storewheel.domain.models.ProductModel
 
 class ProductsListAdapter(private val navigationCallback : (Int) -> Unit) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
     private var products: List<ProductModel> = emptyList()
-    fun setProducts(products: List<ProductModel>){
-        this.products = products
-        notifyItemRangeChanged(0,products.size)
+    private var currentProductSize = 0
+    fun updateProducts(products: List<ProductModel>){
+        if(this.products.isEmpty()) {
+            this.products = products
+            notifyItemRangeChanged(0,products.size)
+            currentProductSize = products.size
+        } else {
+            this.products += products
+            notifyItemRangeInserted(currentProductSize, products.size)
+            currentProductSize = this.products.size
+        }
     }
+
+    fun refreshProducts(products: List<ProductModel>){
+        this.products = products
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(val view: ItemProductListBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(
@@ -29,7 +43,7 @@ class ProductsListAdapter(private val navigationCallback : (Int) -> Unit) : Recy
         holder.view.productPrice.text = products[position].price.toString()
         Glide.with(holder.itemView.context)
             .load(products[position].imageUrl)
-            .placeholder(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.baseline_image_24)
             .error(R.drawable.baseline_error_outline_24)
             .into(holder.view.image)
         holder.itemView.setOnClickListener { navigationCallback(products[position].id) }

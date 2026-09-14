@@ -21,10 +21,10 @@ class ListContainerHelper {
             is ProductsPageState.Success -> updateProductListContainer(context,binding,productsListAdapter,productsPageState)
             is ProductsPageState.Empty -> renderEmptyState(binding)
             is ProductsPageState.Loading -> renderLoadingState(binding)
+            is ProductsPageState.PaginationLoad -> renderIndeterminateLoad(binding)
             is ProductsPageState.Error -> errorCallback(productsPageState)
         }
     }
-
     private fun updateProductListContainer(
         context: Context,
         binding: ViewProductsListBinding,
@@ -42,16 +42,21 @@ class ListContainerHelper {
         productsListAdapter: ProductsListAdapter
     ) {
         val productsList = productsPageState.products
-        productsListAdapter.setProducts(productsList)
-        binding.productsList.adapter = productsListAdapter
+        // update list based on mode
+        if(productsPageState.isFiltered || productsPageState.isRefresh) {
+            productsListAdapter.refreshProducts(productsList)
+        } else {
+            productsListAdapter.updateProducts(productsList)
+        }
         // update label
-        binding.productsListLabel.text = context.getString(R.string.items_available,productsList.size)
+        binding.productsListLabel.text = context.getString(R.string.items_available,productsListAdapter.itemCount)
     }
 
     fun renderProductList (binding: ViewProductsListBinding) {
         binding.recyclerViewContainer.isVisible = true
         binding.stateLoading.root.isGone = true
         binding.stateEmpty.root.isGone = true
+        binding.progressIndicator.isGone = true
     }
 
     fun renderLoadingState (binding: ViewProductsListBinding) {
@@ -64,6 +69,11 @@ class ListContainerHelper {
         binding.stateEmpty.root.isVisible = true
         binding.stateLoading.root.isGone = true
         binding.recyclerViewContainer.isGone = true
+        binding.progressIndicator.isGone = true
+    }
+
+    private fun renderIndeterminateLoad(binding: ViewProductsListBinding) {
+        binding.progressIndicator.isVisible = true
     }
 
 }

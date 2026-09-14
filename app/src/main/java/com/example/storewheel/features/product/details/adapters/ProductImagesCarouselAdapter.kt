@@ -26,7 +26,7 @@ class ProductImagesCarouselAdapter : RecyclerView.Adapter<ProductImagesCarouselA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(holder.itemView.context)
             .load(imageUrls[position])
-            .placeholder(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.baseline_image_24)
             .error(R.drawable.baseline_error_outline_24)
             .into(holder.view.image)
     }

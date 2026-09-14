@@ -11,6 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -32,15 +33,22 @@ class ProductsPageViewmodel @Inject constructor(
     val filteredProductsListState =  _filteredProductsListState as StateFlow<ProductsPageState>
 
     private var searchJob : Job? = null
+    private var currentSKip :Int = 0
 
-    fun getProducts() {
+    fun getProducts(isRefresh: Boolean = false) {
+        // if refresh then reset skip
+        if(isRefresh) currentSKip = 0
+        // start indeterminant loading state
+        if(currentSKip>0) _productsListState.value = ProductsPageState.PaginationLoad
+        // fetch from useCase
         viewModelScope.launch {
-            val result = getProductsUseCase.invoke()
+            val result = getProductsUseCase.invoke(currentSKip)
             result.fold(
                 onSuccess = {
-                    when {
-                       it.isEmpty() -> _productsListState.value = ProductsPageState.Empty
-                        else -> _productsListState.value = ProductsPageState.Success(it)
+                    _productsListState.value = when {
+                        it.isEmpty() && currentSKip == 0 -> ProductsPageState.Empty
+                        isRefresh -> ProductsPageState.Success(it,isRefresh = true)
+                        else -> ProductsPageState.Success(it)
                     }
                 },
                 onFailure = {
@@ -51,17 +59,23 @@ class ProductsPageViewmodel @Inject constructor(
         }
     }
 
+    fun incrementSkip(){
+        currentSKip += 20
+    }
+
     fun searchProducts(query: String){
         searchJob?.cancel()
         searchJob =  viewModelScope.launch {
             // debounce effect
             delay(400L.milliseconds)
             val result = getFilteredProductsUseCase.invoke(query)
+            // to prevent coroutine cancellation exception
+            if(!isActive) return@launch
             result.fold(
                 onSuccess = {
                     when {
                         it.isEmpty() -> _filteredProductsListState.value = ProductsPageState.Empty
-                        else -> _filteredProductsListState.value = ProductsPageState.Success(it)
+                        else -> _filteredProductsListState.value = ProductsPageState.Success(it,true)
                     }
                 },
                 onFailure = {

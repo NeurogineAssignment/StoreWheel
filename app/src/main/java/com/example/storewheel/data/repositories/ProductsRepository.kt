@@ -6,9 +6,9 @@ import com.example.storewheel.network.api.ProductsApi
 import javax.inject.Inject
 
 class ProductsRepository @Inject constructor(private val productsApi: ProductsApi) {
-    suspend fun getProductsList(): Result<List<ProductModel>> {
+    suspend fun getProductsList(skip: Int): Result<List<ProductModel>> {
         return try {
-            val response = productsApi.getProducts()
+            val response = productsApi.getProducts(skip = skip)
             val domainList = response.products.map {
                 ProductModel(
                     id = it.id ?: 0,
