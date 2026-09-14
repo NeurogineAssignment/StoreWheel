@@ -11,6 +11,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -68,11 +69,13 @@ class ProductsPageViewmodel @Inject constructor(
             // debounce effect
             delay(400L.milliseconds)
             val result = getFilteredProductsUseCase.invoke(query)
+            // to prevent coroutine cancellation exception
+            if(!isActive) return@launch
             result.fold(
                 onSuccess = {
                     when {
                         it.isEmpty() -> _filteredProductsListState.value = ProductsPageState.Empty
-                        else -> _filteredProductsListState.value = ProductsPageState.Success(it)
+                        else -> _filteredProductsListState.value = ProductsPageState.Success(it,true)
                     }
                 },
                 onFailure = {
