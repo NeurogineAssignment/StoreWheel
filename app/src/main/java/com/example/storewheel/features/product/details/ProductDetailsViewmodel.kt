@@ -23,7 +23,11 @@ class ProductDetailsViewmodel @Inject constructor(
             val result = getProductDetailsUseCase.invoke(id)
             result.fold(
                 onSuccess = {
-                    _productDetailsState.value = ProductDetailsState.Success(it)
+                    if (it.isEmpty) {
+                        _productDetailsState.value = ProductDetailsState.Empty
+                    } else {
+                        _productDetailsState.value = ProductDetailsState.Success(it)
+                    }
                 },
                 onFailure = {
                     val exception = it.message ?: "unknown error"

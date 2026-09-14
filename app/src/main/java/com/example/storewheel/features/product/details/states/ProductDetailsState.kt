@@ -4,6 +4,7 @@ import com.example.storewheel.domain.models.ProductDetailsModel
 
 sealed interface ProductDetailsState {
     data object Loading : ProductDetailsState
+    data object Empty : ProductDetailsState
     data class Success(val product: ProductDetailsModel) : ProductDetailsState
     data class Error(val message: String, val specificMessage: String) : ProductDetailsState
 }
