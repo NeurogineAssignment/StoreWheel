@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.storewheel.R
 import com.example.storewheel.commons.showErrorDialog
 import com.example.storewheel.databinding.FragmentProductPageBinding
@@ -76,13 +77,14 @@ class ProductsPage : Fragment() {
     private fun setupUI() {
         searchSetup()
         setupRefreshList()
+        setupProductList()
     }
 
     private fun setupRefreshList() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.refresh -> {
-                    viewModel.getProducts()
+                    viewModel.getProducts(true)
                     true
                 }
                 else -> false
@@ -95,6 +97,25 @@ class ProductsPage : Fragment() {
             viewModel.searchProducts(text.toString())
         }
     }
+
+    private fun setupProductList() {
+        binding.productsListContainer.productsList.adapter = productsListAdapter
+        binding.filteredProductsListContainer.productsList.adapter = filteredProductsListAdapter
+        binding.productsListContainer.productsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(
+                recyclerView: RecyclerView,
+                dx: Int,
+                dy: Int
+            ) {
+                super.onScrolled(recyclerView, dx, dy)
+                if(dy>0 && !recyclerView.canScrollVertically(1)){
+                    viewModel.incrementSkip()
+                    viewModel.getProducts()
+                }
+            }
+        })
+    }
+
     //endregion
 
     // region observables
