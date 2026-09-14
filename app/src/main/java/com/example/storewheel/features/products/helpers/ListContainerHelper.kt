@@ -15,13 +15,13 @@ class ListContainerHelper {
         binding: ViewProductsListBinding,
         productsPageState: ProductsPageState,
         productsListAdapter: ProductsListAdapter,
-        errorCallback: () -> Unit
+        errorCallback: (ProductsPageState.Error) -> Unit
         ) {
         when(productsPageState) {
             is ProductsPageState.Success -> updateProductListContainer(context,binding,productsListAdapter,productsPageState)
             is ProductsPageState.Empty -> renderEmptyState(binding)
             is ProductsPageState.Loading -> renderLoadingState(binding)
-            else -> {errorCallback()}
+            is ProductsPageState.Error -> errorCallback(productsPageState)
         }
     }
 

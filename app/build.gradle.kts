@@ -59,6 +59,9 @@ dependencies {
     implementation(libs.glide)
     // Coroutines
     implementation(libs.coroutines)
+    // Networking
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
     // Tests
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)

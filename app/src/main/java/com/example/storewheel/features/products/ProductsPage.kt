@@ -102,7 +102,7 @@ class ProductsPage : Fragment() {
     private suspend fun observeProducts() {
         viewModel.productsListState.collect { productsPageState ->
             listContainerHelper.stateHandler(requireContext(),binding.productsListContainer,productsPageState,productsListAdapter) {
-                showErrorDialog()
+                showErrorDialog(it.message,it.specificMessage)
             }
         }
     }
@@ -111,7 +111,7 @@ class ProductsPage : Fragment() {
     private suspend fun observeFilteredProducts() {
         viewModel.filteredProductsListState.collect { productsPageState ->
             listContainerHelper.stateHandler(requireContext(),binding.filteredProductsListContainer,productsPageState,filteredProductsListAdapter) {
-                showErrorDialog()
+                showErrorDialog(it.message,it.specificMessage)
             }
         }
     }

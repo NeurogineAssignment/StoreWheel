@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.storewheel.R
 import com.example.storewheel.databinding.ItemProductListBinding
-import com.example.storewheel.domain.ProductModel
+import com.example.storewheel.domain.models.ProductModel
 
 class ProductsListAdapter(private val navigationCallback : (Int) -> Unit) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
     private var products: List<ProductModel> = emptyList()

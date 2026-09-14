@@ -1,6 +1,6 @@
 package com.example.storewheel.domain.usecases
 
-import com.example.storewheel.domain.ProductDetailsModel
+import com.example.storewheel.domain.models.ProductDetailsModel
 import javax.inject.Inject
 
 class GetProductDetailsUseCase @Inject constructor() {

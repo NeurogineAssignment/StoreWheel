@@ -15,9 +15,10 @@ store wheel is a product catalog app built according to material 3
 https://github.com/orgs/NeurogineAssignment/projects/1/views/1
 
 ## TODO
-- Product detail domain layer
-- Product page API layer
 - Product detail page API layer
 - Pagination 
+- Bonus features
+  * Pull-to-refresh
+  * A unit test for my data or business logic 
 
     

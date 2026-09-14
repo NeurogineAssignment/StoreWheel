@@ -6,12 +6,14 @@ import com.example.storewheel.databinding.ViewErrorDialogBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
-fun Fragment.showErrorDialog(): AlertDialog {
+fun Fragment.showErrorDialog(message:String,specificMessage:String): AlertDialog {
     val dialogBinding = ViewErrorDialogBinding.inflate(layoutInflater)
     val dialog = MaterialAlertDialogBuilder(requireContext()).setView(dialogBinding.root).create()
     dialogBinding.confirmation.setOnClickListener {
         dialog.dismiss()
     }
+    dialogBinding.title.text = message
+    dialogBinding.message.text = specificMessage
     dialog.show()
     return dialog
 }
