@@ -1,7 +1,7 @@
 package com.example.storewheel.data.models
 
 
-data class ProductsResponse (
+data class ProductsResponse(
     val products: List<ProductResponse>
 )
 

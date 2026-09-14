@@ -52,7 +52,7 @@ class ProductDetails : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {observeProductDetails()}
+                launch { observeProductDetails() }
             }
         }
     }
@@ -74,14 +74,15 @@ class ProductDetails : Fragment() {
             findNavController().navigateUp()
         }
     }
+
     //endregion
     private suspend fun observeProductDetails() {
-       viewModel.productDetailsState.collect { productDetails ->
-           detailsCardHelper.stateHandler(binding,productDetails,productImagesCarouselAdapter) {
-               showErrorDialog(it.message,it.specificMessage).setOnDismissListener {
-                   findNavController().navigateUp()
-               }
-           }
-       }
+        viewModel.productDetailsState.collect { productDetails ->
+            detailsCardHelper.stateHandler(binding, productDetails, productImagesCarouselAdapter) {
+                showErrorDialog(it.message, it.specificMessage).setOnDismissListener {
+                    findNavController().navigateUp()
+                }
+            }
+        }
     }
 }

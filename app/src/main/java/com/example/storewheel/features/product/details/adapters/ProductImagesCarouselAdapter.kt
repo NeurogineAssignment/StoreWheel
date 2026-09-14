@@ -7,19 +7,22 @@ import com.bumptech.glide.Glide
 import com.example.storewheel.R
 import com.example.storewheel.databinding.ItemProductImageBinding
 
-class ProductImagesCarouselAdapter : RecyclerView.Adapter<ProductImagesCarouselAdapter.ViewHolder>() {
+class ProductImagesCarouselAdapter :
+    RecyclerView.Adapter<ProductImagesCarouselAdapter.ViewHolder>() {
     private var imageUrls: List<String> = emptyList()
-    fun setImages(imageUrls: List<String>){
+    fun setImages(imageUrls: List<String>) {
         this.imageUrls = imageUrls
-        notifyItemRangeChanged(0,imageUrls.size)
+        notifyItemRangeChanged(0, imageUrls.size)
     }
+
     class ViewHolder(val view: ItemProductImageBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding = ItemProductImageBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding =
+            ItemProductImageBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

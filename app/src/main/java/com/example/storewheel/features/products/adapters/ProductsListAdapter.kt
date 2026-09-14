@@ -8,13 +8,14 @@ import com.example.storewheel.R
 import com.example.storewheel.databinding.ItemProductListBinding
 import com.example.storewheel.domain.models.ProductModel
 
-class ProductsListAdapter(private val navigationCallback : (Int) -> Unit) : RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
+class ProductsListAdapter(private val navigationCallback: (Int) -> Unit) :
+    RecyclerView.Adapter<ProductsListAdapter.ViewHolder>() {
     private var products: List<ProductModel> = emptyList()
     private var currentProductSize = 0
-    fun updateProducts(products: List<ProductModel>){
-        if(this.products.isEmpty()) {
+    fun updateProducts(products: List<ProductModel>) {
+        if (this.products.isEmpty()) {
             this.products = products
-            notifyItemRangeChanged(0,products.size)
+            notifyItemRangeChanged(0, products.size)
             currentProductSize = products.size
         } else {
             this.products += products
@@ -23,7 +24,7 @@ class ProductsListAdapter(private val navigationCallback : (Int) -> Unit) : Recy
         }
     }
 
-    fun refreshProducts(products: List<ProductModel>){
+    fun refreshProducts(products: List<ProductModel>) {
         this.products = products
         notifyDataSetChanged()
     }
@@ -34,7 +35,8 @@ class ProductsListAdapter(private val navigationCallback : (Int) -> Unit) : Recy
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding = ItemProductListBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val binding =
+            ItemProductListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 

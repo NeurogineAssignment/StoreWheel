@@ -6,6 +6,11 @@ sealed interface ProductsPageState {
     data object Loading : ProductsPageState
     data object PaginationLoad : ProductsPageState
     data object Empty : ProductsPageState
-    data class Success(val products: List<ProductModel>,val isFiltered: Boolean = false,val isRefresh: Boolean = false) : ProductsPageState
+    data class Success(
+        val products: List<ProductModel>,
+        val isFiltered: Boolean = false,
+        val isRefresh: Boolean = false
+    ) : ProductsPageState
+
     data class Error(val message: String, val specificMessage: String) : ProductsPageState
 }

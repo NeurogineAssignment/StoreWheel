@@ -1,4 +1,5 @@
 package com.example.storewheel.network.api
+
 import com.example.storewheel.data.models.ProductDetailsResponse
 import com.example.storewheel.data.models.ProductsResponse
 import com.example.storewheel.network.utils.Constants
@@ -12,8 +13,10 @@ interface ProductsApi {
         @Query("limit") limit: Int = 20,
         @Query("skip") skip: Int = 0
     ): ProductsResponse
+
     @GET(Constants.SEARCH_PRODUCTS_URL)
     suspend fun searchProducts(@Query("q") query: String): ProductsResponse
+
     @GET(Constants.PRODUCT_DETAILS_URL)
     suspend fun getProductById(@Path("id") id: Int): ProductDetailsResponse
 }

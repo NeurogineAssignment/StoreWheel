@@ -13,6 +13,5 @@
         app:indicatorSize="48dp"
         app:trackThickness="4dp"
         app:indicatorColor="?attr/colorPrimary"
-        app:trackColor="?attr/colorOnSurfaceVariant"
-        />
+        app:trackColor="?attr/colorOnSurfaceVariant" />
 </FrameLayout>

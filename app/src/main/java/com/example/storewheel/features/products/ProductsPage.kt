@@ -30,8 +30,10 @@ class ProductsPage : Fragment() {
     private var _binding: FragmentProductPageBinding? = null
     private val viewModel: ProductsPageViewmodel by viewModels()
     private val listContainerHelper = ListContainerHelper()
-    private val productsListAdapter = ProductsListAdapter(navigationCallback = ::navigateToProductDetails)
-    private val filteredProductsListAdapter = ProductsListAdapter(navigationCallback = ::navigateToProductDetails)
+    private val productsListAdapter =
+        ProductsListAdapter(navigationCallback = ::navigateToProductDetails)
+    private val filteredProductsListAdapter =
+        ProductsListAdapter(navigationCallback = ::navigateToProductDetails)
 
 
     // region lifecycle
@@ -60,8 +62,8 @@ class ProductsPage : Fragment() {
         // it is also needed since we use kotlin flow and not livedata
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                launch {observeProducts()}
-                launch {observeFilteredProducts()}
+                launch { observeProducts() }
+                launch { observeFilteredProducts() }
             }
         }
     }
@@ -76,17 +78,18 @@ class ProductsPage : Fragment() {
     // region setup
     private fun setupUI() {
         searchSetup()
-        setupRefreshList()
+        setupRefresh()
         setupProductList()
     }
 
-    private fun setupRefreshList() {
+    private fun setupRefresh() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.refresh -> {
                     viewModel.getProducts(true)
                     true
                 }
+
                 else -> false
             }
         }
@@ -101,14 +104,15 @@ class ProductsPage : Fragment() {
     private fun setupProductList() {
         binding.productsListContainer.productsList.adapter = productsListAdapter
         binding.filteredProductsListContainer.productsList.adapter = filteredProductsListAdapter
-        binding.productsListContainer.productsList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.productsListContainer.productsList.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrolled(
                 recyclerView: RecyclerView,
                 dx: Int,
                 dy: Int
             ) {
                 super.onScrolled(recyclerView, dx, dy)
-                if(dy>0 && !recyclerView.canScrollVertically(1)){
+                if (dy > 0 && !recyclerView.canScrollVertically(1)) {
                     viewModel.incrementSkip()
                     viewModel.getProducts()
                 }
@@ -122,8 +126,13 @@ class ProductsPage : Fragment() {
 
     private suspend fun observeProducts() {
         viewModel.productsListState.collect { productsPageState ->
-            listContainerHelper.stateHandler(requireContext(),binding.productsListContainer,productsPageState,productsListAdapter) {
-                showErrorDialog(it.message,it.specificMessage)
+            listContainerHelper.stateHandler(
+                requireContext(),
+                binding.productsListContainer,
+                productsPageState,
+                productsListAdapter
+            ) {
+                showErrorDialog(it.message, it.specificMessage)
             }
         }
     }
@@ -131,8 +140,13 @@ class ProductsPage : Fragment() {
 
     private suspend fun observeFilteredProducts() {
         viewModel.filteredProductsListState.collect { productsPageState ->
-            listContainerHelper.stateHandler(requireContext(),binding.filteredProductsListContainer,productsPageState,filteredProductsListAdapter) {
-                showErrorDialog(it.message,it.specificMessage)
+            listContainerHelper.stateHandler(
+                requireContext(),
+                binding.filteredProductsListContainer,
+                productsPageState,
+                filteredProductsListAdapter
+            ) {
+                showErrorDialog(it.message, it.specificMessage)
             }
         }
     }
@@ -141,11 +155,12 @@ class ProductsPage : Fragment() {
 
     // region navigation
 
-    private fun navigateToProductDetails(productId:Int) {
+    private fun navigateToProductDetails(productId: Int) {
         val bundle = bundleOf("productId" to productId)
         findNavController().navigate(
             R.id.action_ProductPageFragment_to_ProductDetailsFragment,
-            bundle)
+            bundle
+        )
     }
 
     //endregion

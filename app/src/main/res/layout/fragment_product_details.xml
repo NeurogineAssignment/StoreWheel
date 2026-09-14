@@ -56,8 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     tools:listitem="@layout/item_product_image"
-                    app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager"
-                    />
+                    app:layoutManager="com.google.android.material.carousel.CarouselLayoutManager" />
 
                 <RatingBar
                     android:id="@+id/rating"
