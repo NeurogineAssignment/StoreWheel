@@ -50,14 +50,19 @@ class ListContainerHelper {
     ) {
         val productsList = productsPageState.products
         // update list based on mode
+        var newSize = 0
         if (productsPageState.isFiltered || productsPageState.isRefresh) {
-            productsListAdapter.refreshProducts(productsList)
+            binding.productsList.scrollToPosition(0)
+            productsListAdapter.submitList(productsList)
+            newSize = productsList.size
         } else {
-            productsListAdapter.updateProducts(productsList)
+            val newList = productsListAdapter.currentList + productsList
+            productsListAdapter.submitList(newList)
+            newSize = newList.size
         }
         // update label
         binding.productsListLabel.text =
-            context.getString(R.string.items_available, productsListAdapter.itemCount)
+            context.getString(R.string.items_available, newSize)
     }
 
     fun renderProductList(binding: ViewProductsListBinding) {
