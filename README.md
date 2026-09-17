@@ -23,9 +23,8 @@ https://github.com/orgs/NeurogineAssignment/projects/1/views/1
 
 ## TODO
 - Bonus features
-  * Pull-to-refresh
-  * Apply diffing to the product list adapters
-  * A unit test for my data or business logic 
+  * A unit test for my data or business logic
+  * Paging 3 library implementation
 
 ## Design
 - i've actually started first by designing the UI on figma usng material3 components , you can check it here :-
