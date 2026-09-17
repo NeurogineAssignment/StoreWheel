@@ -36,12 +36,8 @@ class ProductsPageViewmodel @Inject constructor(
     private var searchJob: Job? = null
     private var currentSKip: Int = 0
 
-    fun getProducts(isRefresh: Boolean = false) {
-        // if refresh then reset skip
-        if (isRefresh) currentSKip = 0
-        // start indeterminant loading state
-        if (currentSKip > 0) _productsListState.value = ProductsPageState.PaginationLoad
-        // fetch from useCase
+    fun getProducts(isRefresh: Boolean = false,isRefreshOnSwipe: Boolean = false) {
+        sendInitialLoadingState(isRefresh||isRefreshOnSwipe)
         viewModelScope.launch {
             val result = getProductsUseCase.invoke(currentSKip)
             result.fold(
@@ -59,6 +55,13 @@ class ProductsPageViewmodel @Inject constructor(
                 }
             )
         }
+    }
+
+    private fun sendInitialLoadingState(isRefresh: Boolean) {
+        // if refresh then reset skip
+        if (isRefresh) currentSKip = 0 ; _productsListState.value = ProductsPageState.PaginationLoad
+        // start indeterminant loading state
+        if (currentSKip > 0) _productsListState.value = ProductsPageState.PaginationLoad
     }
 
     fun incrementSkip() {
