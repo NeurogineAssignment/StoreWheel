@@ -78,11 +78,12 @@ class ProductsPage : Fragment() {
     // region setup
     private fun setupUI() {
         searchSetup()
-        setupRefresh()
+        setupRefreshMenu()
+        setupSwipOnRefresh()
         setupProductList()
     }
 
-    private fun setupRefresh() {
+    private fun setupRefreshMenu() {
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.refresh -> {
@@ -93,6 +94,12 @@ class ProductsPage : Fragment() {
                 else -> false
             }
         }
+    }
+
+    private fun setupSwipOnRefresh() {
+       binding.productsListContainer.swiperefresh.setOnRefreshListener {
+           viewModel.getProducts(isRefreshOnSwipe = true)
+       }
     }
 
     private fun searchSetup() {

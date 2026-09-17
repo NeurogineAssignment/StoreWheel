@@ -51,10 +51,16 @@ class ListContainerHelper {
         val productsList = productsPageState.products
         // update list based on mode
         var newSize = 0
-        if (productsPageState.isFiltered || productsPageState.isRefresh) {
+        if (productsPageState.isFiltered ||
+            productsPageState.isRefresh ||
+            productsPageState.isRefreshOnSwipe
+            ) {
             binding.productsList.scrollToPosition(0)
             productsListAdapter.submitList(productsList)
             newSize = productsList.size
+            if (productsPageState.isRefreshOnSwipe){
+                binding.swiperefresh.isRefreshing = false
+            }
         } else {
             val newList = productsListAdapter.currentList + productsList
             productsListAdapter.submitList(newList)
