@@ -49,6 +49,7 @@ class ProductsPageViewmodel @Inject constructor(
                     _productsListState.value = when {
                         it.isEmpty() && currentSKip == 0 -> ProductsPageState.Empty
                         isRefresh -> ProductsPageState.Success(it, isRefresh = true)
+                        isRefreshOnSwipe -> ProductsPageState.Success(it, isRefreshOnSwipe = true)
                         else -> ProductsPageState.Success(it)
                     }
                 },
